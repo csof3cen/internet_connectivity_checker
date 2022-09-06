@@ -8,39 +8,52 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TextStyle kTextStyle =
+        Theme.of(context).textTheme.headline4!.copyWith(color: Colors.white);
     return MaterialApp(
       theme: ThemeData(primarySwatch: Colors.indigo),
       home: Scaffold(
+        backgroundColor: const Color(0XFF000F1D),
         appBar: AppBar(
           centerTitle: true,
           title: const Text("Internet Connectivity Checker"),
         ),
         body: Center(
           child: Container(
+            height: 300,
+            width: 300,
             margin: const EdgeInsets.all(20),
-            height: double.maxFinite,
-            width: double.maxFinite,
-            child: internetConnectivityBuilder((status, interval) {
-              if (status == ConnectivityStatus.online) {
-                return Container(
-                  color: Colors.green,
-                  child: const Center(child: Text("Connecté")),
-                );
-              } else if (status == ConnectivityStatus.offine) {
-                return Container(
-                  color: Colors.red,
-                  child: const Center(child: Text("Déconnecté")),
-                );
-              } else {
-                return const Center(
-                  child: SizedBox(
-                    width: 25,
-                    height: 25,
-                    child: CircularProgressIndicator(),
-                  ),
-                );
-              }
-            }),
+            child: internetConnectivityBuilder(
+              interval: 1000,
+              (ConnectivityStatus status) {
+                if (status == ConnectivityStatus.online) {
+                  return Container(
+                    decoration: BoxDecoration(
+                      color: Colors.green,
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: Center(child: Text("Connecté", style: kTextStyle)),
+                  );
+                } else if (status == ConnectivityStatus.offine) {
+                  return Container(
+                    decoration: BoxDecoration(
+                      color: Colors.red,
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: Center(child: Text("Déconnecté", style: kTextStyle)),
+                  );
+                } else {
+                  // status == ConnectivityStatus.offline
+                  return const Center(
+                    child: SizedBox(
+                      width: 25,
+                      height: 25,
+                      child: CircularProgressIndicator(strokeWidth: 2),
+                    ),
+                  );
+                }
+              },
+            ),
           ),
         ),
       ),

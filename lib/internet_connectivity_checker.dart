@@ -6,13 +6,13 @@ import 'package:flutter/material.dart';
 
 enum ConnectivityStatus { online, offine, checking }
 
+/// The default interval is set to 5 seconds
 int defaultInterval = 5000;
 
 /// An InternetConnectivity
 class InternetConnectivity {
   /// Create a new [InternetConnectivity] object.
   InternetConnectivity({
-    this.interval,
     this.domainsToCheck = const [
       'google.com',
       'exemple.com',
@@ -24,17 +24,15 @@ class InternetConnectivity {
   /// A list of custom domains to check
   final List<String> domainsToCheck;
 
-  /// The interval in milliseconds to re-check internet connectivity, default to 5000ms (5 seconds)
-  final int? interval;
-
   /// A stream of bool that lookup [domainsToCheck] every [interval]
   Stream<bool> isConnectedToInternet({int? intervalInMilliseconds}) {
     StreamController<bool> controller = StreamController();
 
     checkInternet() async {
-      intervalInMilliseconds = interval ?? defaultInterval;
-      Timer.periodic(Duration(milliseconds: intervalInMilliseconds!),
-          (timer) async {
+      Timer.periodic(
+          Duration(
+            milliseconds: intervalInMilliseconds ?? defaultInterval,
+          ), (timer) async {
         int success = 0;
         for (String domain in domainsToCheck) {
           try {
@@ -62,19 +60,22 @@ class InternetConnectivity {
   }
 }
 
-internetConnectivityBuilder(
-  Widget Function(ConnectivityStatus status, int interval) builder,
-) {
-  Stream stream = InternetConnectivity().isConnectedToInternet();
+internetConnectivityBuilder(Widget Function(ConnectivityStatus status) builder,
+
+    /// The interval in milliseconds to re-check internet connectivity, default to 5000ms (5 seconds)
+    {int? interval}) {
+  Stream stream = InternetConnectivity().isConnectedToInternet(
+    intervalInMilliseconds: interval,
+  );
   return StreamBuilder(
     stream: stream,
     builder: (context, snapshot) {
       if (snapshot.hasData && (snapshot.data as bool) == true) {
-        return builder(ConnectivityStatus.online, defaultInterval);
+        return builder(ConnectivityStatus.online);
       } else if (snapshot.connectionState == ConnectionState.waiting) {
-        return builder(ConnectivityStatus.checking, defaultInterval);
+        return builder(ConnectivityStatus.checking);
       } else {
-        return builder(ConnectivityStatus.offine, defaultInterval);
+        return builder(ConnectivityStatus.offine);
       }
     },
   );
