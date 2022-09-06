@@ -1,22 +1,10 @@
-<!--
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
+# internet_connectivity_checker
 
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/guides/libraries/writing-package-pages).
-
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-library-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/developing-packages).
--->
-
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+The [connectivity](https://pub.dev/packages/connectivity) package and other similar packages only provides information if there is a network connection, but not if the network is connected to the Internet. That's why the [internet_connectivity_checker](https://github.com/HamadaHiro/internet_connectivity_checker) package helps you easily manage dynamic widgets based on the device's internet access.
 
 ## Features
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+
 
 ## Getting started
 
@@ -29,7 +17,42 @@ TODO: Include short and useful examples for package users. Add longer examples
 to `/example` folder.
 
 ```dart
-const like = 'sample';
+class ConnectivityStateBased extends StatelessWidget {
+  const ConnectivityStateBased({
+    required this.onConnectedChild,
+    required this.onOfflineChild,
+    Key? key,
+  }) : super(key: key);
+
+  final Widget onConnectedChild;
+  final Widget onOfflineChild;
+
+  @override
+  Widget build(BuildContext context) {
+    Stream stream = isConnectedToInternet(interval: 1);
+    return StreamBuilder(
+      stream: stream,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          bool internet = snapshot.data as bool;
+          return internet ? onConnectedChild : onOfflineChild;
+        } else if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(
+            child: SizedBox(
+              height: circularProgressIndicatorSize / 2,
+              width: circularProgressIndicatorSize / 2,
+              child: const CircularProgressIndicator(),
+            ),
+          );
+        } else {
+          return const Center(
+            child: Icon(FeatherIcons.alertTriangle),
+          );
+        }
+      },
+    );
+  }
+}
 ```
 
 ## Additional information
