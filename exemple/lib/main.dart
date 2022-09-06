@@ -32,7 +32,7 @@ class App extends StatelessWidget {
                       color: Colors.green,
                       borderRadius: BorderRadius.circular(15),
                     ),
-                    child: Center(child: Text("Connecté", style: kTextStyle)),
+                    child: Center(child: Text("Online", style: kTextStyle)),
                   );
                 } else if (status == ConnectivityStatus.offine) {
                   return Container(
@@ -40,7 +40,7 @@ class App extends StatelessWidget {
                       color: Colors.red,
                       borderRadius: BorderRadius.circular(15),
                     ),
-                    child: Center(child: Text("Déconnecté", style: kTextStyle)),
+                    child: Center(child: Text("Offline", style: kTextStyle)),
                   );
                 } else {
                   // status == ConnectivityStatus.offline
