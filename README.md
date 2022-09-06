@@ -5,9 +5,6 @@ The [connectivity](https://pub.dev/packages/connectivity) package and other simi
 <br>
 
 ![Demo](demo/demo.gif)
-<style>
-  img[alt=Demo] { width: 400px; display: block; margin: auto; }
-</style>
 
 <br>
 
