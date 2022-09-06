@@ -4,8 +4,10 @@ The [connectivity](https://pub.dev/packages/connectivity) package and other simi
 
 <br>
 
-<!-- ![Demo](demo/demo.gif =300x900) -->
-<img src="./demo/demo.gif" alt="Demo" width="400" style="display:block;margin:auto;"/>
+![Demo](demo/demo.gif)
+<style>
+  img[alt=Demo] { width: 400px; display: block; margin: auto; }
+</style>
 
 <br>
 

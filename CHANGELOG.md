@@ -1,6 +1,6 @@
-## 0.0.2
+## 0.0.3
 
-* Updated the demo : Adjusted demo image
+* Updated README.md : Adjusted demo image
 
 ## 0.0.1
 
