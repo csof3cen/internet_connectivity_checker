@@ -29,12 +29,12 @@ class InternetConnectivity {
 
   /// A stream of bool that lookup [domainsToCheck] every [interval]
   Stream<bool> isConnectedToInternet({int? intervalInMilliseconds}) {
-    intervalInMilliseconds = interval ?? defaultInterval;
-
     StreamController<bool> controller = StreamController();
 
     checkInternet() async {
-      Timer.periodic(Duration(milliseconds: interval!), (timer) async {
+      intervalInMilliseconds = interval ?? defaultInterval;
+      Timer.periodic(Duration(milliseconds: intervalInMilliseconds!),
+          (timer) async {
         int success = 0;
         for (String domain in domainsToCheck) {
           try {
@@ -69,7 +69,7 @@ internetConnectivityBuilder(
   return StreamBuilder(
     stream: stream,
     builder: (context, snapshot) {
-      if (snapshot.hasData) {
+      if (snapshot.hasData && (snapshot.data as bool) == true) {
         return builder(ConnectivityStatus.online, defaultInterval);
       } else if (snapshot.connectionState == ConnectionState.waiting) {
         return builder(ConnectivityStatus.checking, defaultInterval);
@@ -78,25 +78,4 @@ internetConnectivityBuilder(
       }
     },
   );
-}
-
-class Test extends StatelessWidget {
-  const Test({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return internetConnectivityBuilder((status, interval) {
-      if (status == ConnectivityStatus.online) {
-        return const Text("Connecté");
-      } else if (status == ConnectivityStatus.offine) {
-        return const Text("Déconnecté");
-      } else {
-        return const SizedBox(
-          width: 25,
-          height: 25,
-          child: CircularProgressIndicator(),
-        );
-      }
-    });
-  }
 }
