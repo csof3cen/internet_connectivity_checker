@@ -42,7 +42,7 @@ class Hello extends StatelessWidget {
 ```
 <br>
 
-A more complete exemple
+A more complete example
 ```dart
 internetConnectivityBuilder(
   interval: 1000,

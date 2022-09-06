@@ -15,7 +15,7 @@ class InternetConnectivity {
   InternetConnectivity({
     this.domainsToCheck = const [
       'google.com',
-      'exemple.com',
+      'example.com',
       'github.com',
       'pub.dev',
     ],
