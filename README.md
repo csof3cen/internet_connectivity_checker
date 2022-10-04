@@ -108,7 +108,7 @@ class Foo extends StatelessWidget {
 You can also customize the domains to check and then, if at least the half of domains lookup succeeded, we pretend internet is on, otherwise, device is offline;
 ```dart
 Stream<bool> stream = InternetConnectivity(
-  domainsToCheck: ['google.com', 'exemple.com', 'github.com', 'pub.dev'],
+  domainsToCheck: ['google.com', 'example.com', 'github.com', 'pub.dev'],
 ).isConnectedToInternet(intervalInMilliseconds: 2000);
 ```
 
