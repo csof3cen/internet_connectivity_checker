@@ -121,7 +121,7 @@ Contribute to this project by making a pull request or creating a new issue on G
 ```
 MIT License
 
-Copyright (c) Serigne Moustapha Sy Ndoye (@HamadaHiro), 2022.
+Copyright (c) Moustapha Ndoye (@csof3cen), 2022.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
