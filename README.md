@@ -1,6 +1,10 @@
 # internet_connectivity_checker
 
-The [connectivity](https://pub.dev/packages/connectivity) package and other similar packages only provides information if there is a network connection, but not if the network is connected to the Internet. That's why the [internet_connectivity_checker](https://github.com/HamadaHiro/internet_connectivity_checker) package helps you easily manage dynamic widgets based on the device's internet access.
+The [connectivity](https://pub.dev/packages/connectivity) package and other similar packages only
+provides information if there is a network connection, but not if the network is connected to 
+the Internet. That's why the 
+[internet_connectivity_checker](https://github.com/csof3cen/internet_connectivity_checker) package
+helps you easily manage widgets dynamically based on the device's internet access.
 
 <br>
 
@@ -8,16 +12,18 @@ The [connectivity](https://pub.dev/packages/connectivity) package and other simi
 
 <br>
 
-## Getting started
+## 🧑‍💻 Getting started
 
 ```bash
 flutter pub add internet_connectivity_checker
 ```
 
-## Usage
+## 🛠️ Usage
 
 
-Simply import `package:internet_connectivity_checker/internet_connectivity_checker.dart'` and use the `internetConnectivityBuilder`. It takes a builder and an optional parameter, `interval` which is the interval in milliseconds to re-check internet connectivity, default to 5000ms.
+Simply import `package:internet_connectivity_checker/internet_connectivity_checker.dart'` and use 
+the `connectivityBuilder`. It takes a builder and an optional parameter, `interval`(`Duration` object)
+which is the time interval to wait between each internet connectivity verification; default is 5 seconds.
 
 <br>
 
@@ -25,13 +31,15 @@ Simply import `package:internet_connectivity_checker/internet_connectivity_check
 
 <br>
 
+### Exemple
+
 ```dart
 class Hello extends StatelessWidget {
   const Hello({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return internetConnectivityBuilder(
+    return connectivityBuilder(
       (status) {
         bool connected = status == ConnectivityStatus.online;
         return Text(connected ? "Online" : "Offline");
@@ -42,10 +50,10 @@ class Hello extends StatelessWidget {
 ```
 <br>
 
-A more complete example
+A more complete example.
 ```dart
-internetConnectivityBuilder(
-  interval: 1000,
+connectivityBuilder(
+  interval: Duration(seconds: 3),
   (ConnectivityStatus status) {
     if (status == ConnectivityStatus.online) {
       return Container(
@@ -53,17 +61,17 @@ internetConnectivityBuilder(
           color: Colors.green,
           borderRadius: BorderRadius.circular(15),
         ),
-        child: Center(child: Text("Connecté", style: kTextStyle)),
+        child: Center(child: Text("Online", style: kTextStyle)),
       );
-    } else if (status == ConnectivityStatus.offine) {
+    } else if (status == ConnectivityStatus.offline) {
       return Container(
         decoration: BoxDecoration(
           color: Colors.red,
           borderRadius: BorderRadius.circular(15),
         ),
-        child: Center(child: Text("Déconnecté", style: kTextStyle)),
+        child: Center(child: Text("Offline", style: kTextStyle)),
       );
-    } else { // status == ConnectivityStatus.offline
+    } else { // status == ConnectivityStatus.checking
       return const Center(
         child: SizedBox(
           width: 25,
@@ -78,7 +86,8 @@ internetConnectivityBuilder(
 
 <br>
 
-You can also use the `InternetConnectivity().isConnectedToInternet()` stream, provided be the package, to handle the logic yourself.
+You can also use the `ConnectivityChecker().stream` stream, provided be the package, to handle 
+the logic yourself.
 
 ```dart
 class Foo extends StatelessWidget {
@@ -86,9 +95,8 @@ class Foo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Stream<bool> stream = InternetConnectivity().isConnectedToInternet();
     return StreamBuilder(
-      stream: stream,
+      stream: ConnectivityChecker(interval: const Duration(seconds: 3)).stream,
       builder: (context, snapshot) {
         if (snapshot.hasData && (snapshot.data as bool) == true) {
           return const Text("Online");
@@ -105,23 +113,21 @@ class Foo extends StatelessWidget {
 
 <br>
 
-You can also customize the domains to check and then, if at least the half of domains lookup succeeded, we pretend internet is on, otherwise, device is offline;
-```dart
-Stream<bool> stream = InternetConnectivity(
-  domainsToCheck: ['google.com', 'example.com', 'github.com', 'pub.dev'],
-).isConnectedToInternet(intervalInMilliseconds: 2000);
-```
+## ℹ️ Additional Information
+Contribute to this project by making a PR ⬆️ or creating a new issue 🐞 on GitHub.
+<br>
+Do not hesitate to let a 🌟 on the [repo](https://github.com/csof3cen/internet_connectivity_checker) if you find it useful.
 
-## Additional Information
-Contribute to this project by making a pull request or creating a new issue on GitHub.
+## 👷 Maintainers
+Created & maintained with 💖 by [moustapha.dev](https://moustapha.dev).
 
 
-## License
+## 📄 License
 
 ```
 MIT License
 
-Copyright (c) Moustapha Ndoye (@csof3cen), 2022.
+Copyright (c) Moustapha Ndoye (@csof3cen), 2023.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
