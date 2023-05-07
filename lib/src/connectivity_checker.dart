@@ -5,20 +5,21 @@ class ConnectivityChecker {
   /// A list of hosts to lookup every [interval]
   final List<String> _urlsToCheck = const [
     'https://google.com',
-    'https://example.com'
+    'https://github.com'
   ];
 
-  // The time to wait between each internet connectivity verification
-  final Duration interval;
+  /// The time to wait between each internet connectivity verification
+  /// The default [interval] is set to 5 seconds
+  final Duration? interval;
 
   final StreamController<bool> _streamController = StreamController<bool>();
 
   Stream<bool> get stream => _streamController.stream.asBroadcastStream();
 
   ConnectivityChecker({
-    this.interval = const Duration(seconds: 5),
+    this.interval,
   }) {
-    Timer.periodic(interval, (_) => _checkUrls());
+    Timer.periodic(interval ?? const Duration(seconds: 5), (_) => _checkUrls());
   }
 
   void _checkUrls() async {
@@ -47,6 +48,7 @@ class ConnectivityChecker {
         .add(successfulLookupsNum >= failedLookupsNum ? true : false);
   }
 
+  /// Dispose the streamController to free up resources
   void dispose() {
     _streamController.close();
   }
