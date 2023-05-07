@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-// import 'package:internet_connectivity_checker/internet_connectivity_checker.dart';
+// import 'package:internet_connectivity_checker/internet_connectivity_checker.old.dart';
 
 void main() {
   test('adds one to input values', () {

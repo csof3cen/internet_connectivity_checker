@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:internet_connectivity_checker/internet_connectivity_checker.dart';
+import 'package:internet_connectivity_checker/internet_connectivity_checker.old.dart';
 
 void main() => runApp(const App());
 
