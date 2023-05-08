@@ -24,12 +24,12 @@ class _ConnectivityBuilderState extends State<ConnectivityBuilder> {
       ).stream,
       builder: (context, snapshot) {
         if (snapshot.hasData && (snapshot.data as bool) == true) {
-          debugPrint('Working');
+          // debugPrint('Working');
           return widget.builder(ConnectivityStatus.online);
         } else if (snapshot.connectionState == ConnectionState.waiting) {
           return widget.builder(ConnectivityStatus.checking);
         } else {
-          debugPrint('Failed');
+          // debugPrint('Failed');
           return widget.builder(ConnectivityStatus.offline);
         }
       },

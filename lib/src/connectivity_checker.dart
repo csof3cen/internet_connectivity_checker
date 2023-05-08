@@ -41,14 +41,15 @@ class ConnectivityChecker {
   }) {
     if (interval != null) {
       if (DateTime.now()
-          .add(const Duration(seconds: 1))
+          .add(const Duration(seconds: 3))
           .isAfter(DateTime.now().add(interval!))) {
         throw Exception(
-            'interval cannot be smaller than 1 second. ${interval!.inMilliseconds}ms given in.');
+            'interval cannot be smaller than 3 seconds because of lookup time. ${interval!.inMilliseconds}ms given.');
       }
     }
 
     _checkUrls();
+    // TODO: Handle duration taken by host lookups
     Timer.periodic(interval ?? const Duration(seconds: 5), (_) => _checkUrls());
   }
 
@@ -61,11 +62,11 @@ class ConnectivityChecker {
         final request = await HttpClient().headUrl(Uri.parse(url));
         final response = await request.close();
 
-        if (response.statusCode == 200) {
+        if (response.connectionInfo != null) {
           // print('Success');
           successfulLookupsNum++;
         } else {
-          // print('Failed.');
+          // print('Failed. ${response.statusCode}');
           failedLookupsNum++;
         }
       } catch (e) {
@@ -74,6 +75,7 @@ class ConnectivityChecker {
       }
     }
 
+    print(successfulLookupsNum >= failedLookupsNum ? 'Success' : 'Failed');
     _streamController.sink
         .add(successfulLookupsNum >= failedLookupsNum ? true : false);
   }

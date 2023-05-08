@@ -22,7 +22,7 @@ flutter pub add internet_connectivity_checker
 
 
 Simply import `package:internet_connectivity_checker/internet_connectivity_checker.dart'` and use 
-the `connectivityBuilder`. It takes a builder and an optional parameter, `interval`(`Duration` object)
+the `ConnectivityBuilder` widget. It takes a builder and an optional parameter, `interval`(`Duration` object)
 which is the time interval to wait between each internet connectivity verification; default is 5 seconds.
 
 <br>
@@ -39,8 +39,8 @@ class Hello extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return connectivityBuilder(
-      (status) {
+    return ConnectivityBuilder(
+      builder: (status) {
         bool connected = status == ConnectivityStatus.online;
         return Text(connected ? "Online" : "Offline");
       },
@@ -52,9 +52,9 @@ class Hello extends StatelessWidget {
 
 A more complete example.
 ```dart
-connectivityBuilder(
+ConnectivityBuilder(
   interval: Duration(seconds: 3),
-  (ConnectivityStatus status) {
+  builder: (ConnectivityStatus status) {
     if (status == ConnectivityStatus.online) {
       return Container(
         decoration: BoxDecoration(

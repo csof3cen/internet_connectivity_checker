@@ -13,7 +13,7 @@ class App extends StatelessWidget {
         .headlineMedium!
         .copyWith(color: Colors.white);
     return MaterialApp(
-      theme: ThemeData(primarySwatch: Colors.indigo),
+      theme: ThemeData.dark(useMaterial3: true),
       home: Scaffold(
         backgroundColor: const Color(0XFF000F1D),
         appBar: AppBar(
@@ -26,7 +26,7 @@ class App extends StatelessWidget {
             height: 300,
             margin: const EdgeInsets.all(20),
             child: ConnectivityBuilder(
-              interval: const Duration(seconds: 1),
+              interval: const Duration(seconds: 3),
               builder: (ConnectivityStatus status) {
                 if (status == ConnectivityStatus.online) {
                   return Container(
