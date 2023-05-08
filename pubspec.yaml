@@ -1,7 +1,7 @@
 name: internet_connectivity_checker
-description: The flutter package that helps you easily manage dynamic widgets based on the device's internet access.
-version: 0.1.0
-homepage: https://github.com/HamadaHiro/internet_connectivity_checker
+description: The flutter package that helps you easily manage widgets dynamically based on the device's internet access.
+version: 1.0.0
+homepage: https://github.com/csof3cen/internet_connectivity_checker
 
 environment:
   sdk: '>=2.18.0 <3.0.0'
