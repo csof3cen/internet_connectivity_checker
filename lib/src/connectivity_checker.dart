@@ -1,6 +1,14 @@
 import 'dart:io';
 import 'dart:async';
 
+bool _isDurationALongerThanB(Duration a, Duration b) {
+  if (DateTime.now().add(a).isAfter(DateTime.now().add(b))) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
 class ConnectivityChecker {
   /// A list of hosts to lookup every [interval]
   final List<String> _urlsToCheck = const [
@@ -14,11 +22,33 @@ class ConnectivityChecker {
 
   final StreamController<bool> _streamController = StreamController<bool>();
 
-  Stream<bool> get stream => _streamController.stream.asBroadcastStream();
+  Stream<bool> get stream =>
+      _streamController.stream.asBroadcastStream().timeout(
+        interval != null
+            ? Duration(
+                seconds: _isDurationALongerThanB(
+                        interval!, const Duration(seconds: 2))
+                    ? (interval!.inSeconds + 2)
+                    : 2)
+            : const Duration(seconds: 5),
+        onTimeout: (eventSink) {
+          eventSink.add(false);
+        },
+      );
 
   ConnectivityChecker({
     this.interval,
   }) {
+    if (interval != null) {
+      if (DateTime.now()
+          .add(const Duration(seconds: 1))
+          .isAfter(DateTime.now().add(interval!))) {
+        throw Exception(
+            'interval cannot be smaller than 1 second. ${interval!.inMilliseconds}ms given in.');
+      }
+    }
+
+    _checkUrls();
     Timer.periodic(interval ?? const Duration(seconds: 5), (_) => _checkUrls());
   }
 

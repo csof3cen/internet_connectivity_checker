@@ -8,8 +8,10 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    TextStyle kTextStyle =
-        Theme.of(context).textTheme.headline4!.copyWith(color: Colors.white);
+    TextStyle kTextStyle = Theme.of(context)
+        .textTheme
+        .headlineMedium!
+        .copyWith(color: Colors.white);
     return MaterialApp(
       theme: ThemeData(primarySwatch: Colors.indigo),
       home: Scaffold(
@@ -20,12 +22,12 @@ class App extends StatelessWidget {
         ),
         body: Center(
           child: Container(
-            height: 300,
             width: 300,
+            height: 300,
             margin: const EdgeInsets.all(20),
-            child: internetConnectivityBuilder(
-              interval: 1000,
-              (ConnectivityStatus status) {
+            child: ConnectivityBuilder(
+              interval: const Duration(seconds: 1),
+              builder: (ConnectivityStatus status) {
                 if (status == ConnectivityStatus.online) {
                   return Container(
                     decoration: BoxDecoration(
@@ -34,7 +36,7 @@ class App extends StatelessWidget {
                     ),
                     child: Center(child: Text("Online", style: kTextStyle)),
                   );
-                } else if (status == ConnectivityStatus.offine) {
+                } else if (status == ConnectivityStatus.offline) {
                   return Container(
                     decoration: BoxDecoration(
                       color: Colors.red,
@@ -43,7 +45,7 @@ class App extends StatelessWidget {
                     child: Center(child: Text("Offline", style: kTextStyle)),
                   );
                 } else {
-                  // status == ConnectivityStatus.offline
+                  // status == ConnectivityStatus.checking
                   return const Center(
                     child: SizedBox(
                       width: 25,
