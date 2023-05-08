@@ -53,7 +53,6 @@ class Hello extends StatelessWidget {
 A more complete example.
 ```dart
 ConnectivityBuilder(
-  interval: Duration(seconds: 3),
   builder: (ConnectivityStatus status) {
     if (status == ConnectivityStatus.online) {
       return Container(
@@ -96,7 +95,7 @@ class Foo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-      stream: ConnectivityChecker(interval: const Duration(seconds: 3)).stream,
+      stream: ConnectivityChecker(interval: const Duration(seconds: 10)).stream,
       builder: (context, snapshot) {
         if (snapshot.hasData && (snapshot.data as bool) == true) {
           return const Text("Online");

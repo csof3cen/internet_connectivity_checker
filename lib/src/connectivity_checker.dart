@@ -41,10 +41,10 @@ class ConnectivityChecker {
   }) {
     if (interval != null) {
       if (DateTime.now()
-          .add(const Duration(seconds: 3))
+          .add(const Duration(seconds: 5))
           .isAfter(DateTime.now().add(interval!))) {
         throw Exception(
-            'interval cannot be smaller than 3 seconds because of lookup time. ${interval!.inMilliseconds}ms given.');
+            'interval cannot be smaller than 5 seconds because of lookups time. ${interval!.inMilliseconds}ms given.');
       }
     }
 
@@ -75,9 +75,9 @@ class ConnectivityChecker {
       }
     }
 
-    print(successfulLookupsNum >= failedLookupsNum ? 'Success' : 'Failed');
     _streamController.sink
         .add(successfulLookupsNum >= failedLookupsNum ? true : false);
+    // print(successfulLookupsNum >= failedLookupsNum ? 'Success' : 'Failed');
   }
 
   /// Dispose the streamController to free up resources
