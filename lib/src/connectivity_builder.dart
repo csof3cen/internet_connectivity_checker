@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:internet_connectivity_checker/internet_connectivity_checker.dart';
 
+/// Connectivity builder widget
 class ConnectivityBuilder extends StatefulWidget {
+  /// A builder that enables you to easily handle connectivity state
   const ConnectivityBuilder({
     this.interval,
     required this.builder,
     Key? key,
   }) : super(key: key);
 
+  /// The duration interval to recheck connectivity state
   final Duration? interval;
+
+  /// Connectivity builder function
   final Widget Function(ConnectivityStatus status) builder;
 
   @override

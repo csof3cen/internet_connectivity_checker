@@ -9,12 +9,10 @@ bool _isDurationALongerThanB(Duration a, Duration b) {
   }
 }
 
+/// Connectivity checker class
 class ConnectivityChecker {
   /// A list of hosts to lookup every [interval]
-  final List<String> _urlsToCheck = const [
-    'https://google.com',
-    'https://github.com'
-  ];
+  final List<String> _urlsToCheck = const ['https://google.com', 'https://github.com'];
 
   /// The time to wait between each internet connectivity verification
   /// The default [interval] is set to 5 seconds
@@ -22,12 +20,14 @@ class ConnectivityChecker {
 
   final StreamController<bool> _streamController = StreamController<bool>();
 
-  Stream<bool> get stream =>
-      _streamController.stream.asBroadcastStream().timeout(
+  /// Connectivity stream
+  Stream<bool> get stream => _streamController.stream.asBroadcastStream().timeout(
         interval != null
             ? Duration(
                 seconds: _isDurationALongerThanB(
-                        interval!, const Duration(seconds: 2))
+                interval!,
+                const Duration(seconds: 2),
+              )
                     ? (interval!.inSeconds + 2)
                     : 2)
             : const Duration(seconds: 5),
@@ -36,6 +36,7 @@ class ConnectivityChecker {
         },
       );
 
+  /// Initialize an connectivity checker object
   ConnectivityChecker({
     this.interval,
   }) {
@@ -44,7 +45,8 @@ class ConnectivityChecker {
           .add(const Duration(seconds: 5))
           .isAfter(DateTime.now().add(interval!))) {
         throw Exception(
-            'interval cannot be smaller than 5 seconds because of lookups time. ${interval!.inMilliseconds}ms given.');
+            '''interval cannot be smaller than 5 seconds because of lookups time.
+            ${interval!.inMilliseconds}ms given.''');
       }
     }
 
@@ -57,7 +59,7 @@ class ConnectivityChecker {
     int successfulLookupsNum = 0;
     int failedLookupsNum = 0;
 
-    for (var url in _urlsToCheck) {
+    for (final url in _urlsToCheck) {
       try {
         final request = await HttpClient().headUrl(Uri.parse(url));
         final response = await request.close();
@@ -75,8 +77,9 @@ class ConnectivityChecker {
       }
     }
 
-    _streamController.sink
-        .add(successfulLookupsNum >= failedLookupsNum ? true : false);
+    _streamController.sink.add(
+      successfulLookupsNum >= failedLookupsNum ? true : false,
+    );
     // print(successfulLookupsNum >= failedLookupsNum ? 'Success' : 'Failed');
   }
 
