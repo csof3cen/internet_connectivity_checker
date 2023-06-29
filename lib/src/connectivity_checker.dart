@@ -22,19 +22,17 @@ class ConnectivityChecker {
 
   /// Connectivity stream
   Stream<bool> get stream => _streamController.stream.asBroadcastStream().timeout(
-        interval != null
-            ? Duration(
-                seconds: _isDurationALongerThanB(
-                interval!,
-                const Duration(seconds: 2),
-              )
-                    ? (interval!.inSeconds + 2)
-                    : 2)
-            : const Duration(seconds: 5),
-        onTimeout: (eventSink) {
-          eventSink.add(false);
-        },
-      );
+          interval != null
+              ? Duration(
+                  seconds: _isDurationALongerThanB(
+                  interval!,
+                  const Duration(seconds: 2),
+                )
+                      ? (interval!.inSeconds + 2)
+                      : 2)
+              : const Duration(seconds: 5), onTimeout: (eventSink) {
+        eventSink.add(false);
+      });
 
   /// Initialize an connectivity checker object
   ConnectivityChecker({
