@@ -1,9 +1,24 @@
 include: package:flutter_lints/flutter.yaml
 
-# Additional information about this file can be found at
-# https://dart.dev/guides/language/analysis-options
-
 linter:
   rules:
+    - package_api_docs
+    - library_prefixes
+    - camel_case_types
+    - comment_references
+    # - directives_ordering
     - cancel_subscriptions
-    - avoid_print: false
+    - prefer_single_quotes
+    - camel_case_extensions
+    - public_member_api_docs
+    - slash_for_doc_comments
+    - prefer_final_in_for_each
+    - prefer_const_constructors
+    - lines_longer_than_80_chars
+    - always_use_package_imports
+    - always_declare_return_types
+    - non_constant_identifier_names
+    - curly_braces_in_flow_control_structures
+
+# Additional information about this file can be found at
+# https://dart.dev/guides/language/analysis-options
