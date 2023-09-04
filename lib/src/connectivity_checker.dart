@@ -12,7 +12,10 @@ bool _isDurationALongerThanB(Duration a, Duration b) {
 /// Connectivity checker class
 class ConnectivityChecker {
   /// A list of hosts to lookup every [interval]
-  final List<String> _urlsToCheck = const ['https://google.com', 'https://github.com'];
+  final List<String> _urlsToCheck = const [
+    'https://google.com',
+    'https://github.com'
+  ];
 
   /// The time to wait between each internet connectivity verification
   /// The default [interval] is set to 5 seconds
@@ -21,7 +24,8 @@ class ConnectivityChecker {
   final StreamController<bool> _streamController = StreamController<bool>();
 
   /// Connectivity stream
-  Stream<bool> get stream => _streamController.stream.asBroadcastStream().timeout(
+  Stream<bool> get stream =>
+      _streamController.stream.asBroadcastStream().timeout(
           interval != null
               ? Duration(
                   seconds: _isDurationALongerThanB(
