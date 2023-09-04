@@ -1,3 +1,6 @@
+# 1.0.2
+* Code format
+
 # 1.0.1
 * Public APIs documentation update & perfomance optimization.
 
